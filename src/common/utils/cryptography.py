@@ -1,8 +1,5 @@
 import base64
-from typing import Union
-
 from src import ENCRYPTION_KEY
-
 
 def xor_encrypt(data: bytes | str, key: bytes | str) -> bytes:
     if isinstance(data, str):  # just in case

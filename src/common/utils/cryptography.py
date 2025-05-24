@@ -1,15 +1,15 @@
 import base64
+from typing import Union
 
 from src import ENCRYPTION_KEY
 
-
-def xor_encrypt(data: bytes, key: bytes) -> bytes:
+def xor_encrypt(data: Union[bytes, str], key: Union[bytes, str]) -> bytes:
     if isinstance(data, str):  # just in case
         data = data.encode()
     if isinstance(key, str):
         key = key.encode()
     extended_key = (key * ((len(data) // len(key)) + 1))[:len(data)]
-    return bytes(a ^ b for a, b in zip(data, extended_key, strict=False))
+    return bytes(a ^ b for a, b in zip(data, extended_key, strict=True))
 
 def encrypt_token(token: str) -> str:
     return base64.b64encode(xor_encrypt(token.encode(), ENCRYPTION_KEY)).decode()
